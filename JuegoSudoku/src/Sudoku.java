@@ -12,31 +12,59 @@ import java.util.Scanner;
  * @version 1.0
  * @date 1 dic. 2021 21:29:58
  */
+
 public class Sudoku {
 //VARIABLES GLOBALES - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    Scanner in = new Scanner(System.in);
+    public static Scanner in = new Scanner(System.in);
+    public static int opcion; //opción del menú
+    public static int[][] sudoku = new int[8][8];
 
 //LISTA DE FUNCIONES - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    //Crear sudoku 4x4
+    
+    //Crear sudoku 4x4 =========================================================
     public static int[][] crearSudoku4x4() {
-        int[][] sudoku = new int[4][4];
-        //……………. (rellena el sudoku aleatoriamente)
+        
+        for (int i = 0; i < sudoku.length; i++) { //fila
+            for (int j = 0; j < sudoku[i].length; j++) { //columna
+                sudoku[i][j] = 0;
+            }
+        }
+
         return sudoku;
     }
-
-    //Mostrar el menú y devuelve la opción elegida
-    public static int menu() {
-        sout “Opción 0 1 2 3...”
-
-    int opcion = pedirIntEnRango(1, 8)
-        return opcion;
-
+    //==========================================================================
+    
+    //Mostrar sudoku 4x4 =======================================================
+    public static int[][] mostrarSudoku4x4() {
+        for (int i = 0; i < sudoku.length; i++) { //fila
+            System.out.print("F" + i +": ");
+            for (int j = 0; j < sudoku[i].length; j++) { //columna
+                System.out.print(sudoku[i][j] + " ");
+            }
+            System.out.println(""); 
+        }
+        return sudoku;
     }
+    //==========================================================================
 
-//Pide al jugador un valor INT, una y otra vez hasta que responde con valor en rango
+    //Mostrar el menú y devuelve la opción elegida =============================
+    public static int menu() {
+        System.out.println("0. Salir");
+        System.out.println("1. Mostrar sudoku");
+        System.out.println("2. Añadir o modificar");
+        System.out.println("3. Terminar");
+        System.out.print("Elige una opción: ");
+
+        int opcion = pedirIntEnRango(0, 3);
+        return opcion;
+    }
+    //==========================================================================
+
+    //Pide al jugador un valor INT, umenuna y otra vez hasta que ===============
+    //responde con valor en rango
     public static int pedirIntEnRango(int min, int max) {
-
+        
         int valor;
         do {
             valor = in.nextInt();
@@ -48,12 +76,35 @@ public class Sudoku {
 
         return valor;
     }
+    //==========================================================================
 
 //MAIN PRINCIPAL - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     public static void main(String[] args) {
 
         //VARIABLES AUXILIARES
-        int opcion; //opción del menú
+        
+        //Bucle principal
+        do {
+            crearSudoku4x4(); //Crear la tabla de sudoku al empezar.
+            opcion = menu();
+
+            switch (opcion) {
+                case 0: //Salir
+
+                    break;
+                case 1: //Mostrar sudoku
+                    mostrarSudoku4x4();
+                    break;
+                case 2: //Añadir o modificar
+
+                    break;
+                case 3: //Terminar
+
+                    break;
+            }
+
+            System.out.println("");
+        } while (opcion != 0);
 
     }
 }

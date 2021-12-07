@@ -28,7 +28,7 @@ public class Sudoku {
 
         for (int i = 0; i < sudoku.length; i++) { //fila
             for (int j = 0; j < sudoku[i].length; j++) { //columna
-                sudoku[i][j] = 0;
+                sudoku[i][j] = 1;
             }
         }
 
@@ -80,23 +80,24 @@ public class Sudoku {
     //==========================================================================
 
     //==========================================================================
-
     // Pedir el numero de posición de fila y de columna y un numero de 1 al 4 ==
     // Despues se guarda el número
-    public static int modificarSudoku(int sudoku[][], int num) {
+    public static int[][] modificarSudoku(int sudoku[][], int num) {
         System.out.print("Escribe Nº posicion de fila: ");  //pedir fila
         posF = pedirIntEnRango(0, 3);
         System.out.print("Escribe Nº posicion de columna: "); //pedir columna
         posC = pedirIntEnRango(0, 3);
         System.out.print("Escribe el número: "); //pedir numero
         num = pedirIntEnRango(1, 4);
-        
+
         System.out.println("PosF: " + posF);
         System.out.println("PosC: " + posC);
         System.out.println("Num: " + num);
 
-        return sudoku[posF][posC] = num;
-                
+        sudoku[posF][posC] = num;
+        
+        return sudoku;
+
     }
     //==========================================================================
 
@@ -121,9 +122,7 @@ public class Sudoku {
                     modificarSudoku(sudoku, num);
                     System.out.println("NUMERO DESPUES: " + num);
                     break;
-
                 case 3: //Terminar
-
                     salir = true;
                     break;
             }

@@ -13,16 +13,17 @@ import java.util.Scanner;
  * @date 1 dic. 2021 21:29:58
  */
 public class Sudoku {
-//VARIABLES GLOBALES - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    //VARIABLES GLOBALES - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     public static Scanner in = new Scanner(System.in);
-    public static int opcion; //opción del menú
-    public static int[][] sudoku = new int[4][4];
-    public static boolean salir = false;
-    public static int posC, posF;
-    public static int num;
+    public static int opcion; //variable opción del menú
+    public static int[][] sudoku = new int[4][4]; // crear matriz de sudoku
+    public static boolean salir = false; // boolean salida
+    public static int posC, posF; // Nº de posiciones
+    public static int num; // Número
+    public static boolean resultadoComprobar; // Devuelve true si el resultado es correcto, sino false.
 
-//LISTA DE FUNCIONES - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //LISTA DE FUNCIONES - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //Crear sudoku 4x4 =========================================================
     public static int[][] crearSudoku4x4() {
 
@@ -31,7 +32,6 @@ public class Sudoku {
                 sudoku[i][j] = 1;
             }
         }
-
         return sudoku;
     }
     //==========================================================================
@@ -63,7 +63,7 @@ public class Sudoku {
     }
     //==========================================================================
 
-    //Pide al jugador un valor INT, umenuna y otra vez hasta que ===============
+    //Pide al jugador un valor INT, en una y otra vez hasta que ===============
     //responde con valor en rango
     public static int pedirIntEnRango(int min, int max) {
         int valor;
@@ -79,7 +79,6 @@ public class Sudoku {
     }
     //==========================================================================
 
-    //==========================================================================
     // Pedir el numero de posición de fila y de columna y un numero de 1 al 4 ==
     // Despues se guarda el número
     public static int[][] modificarSudoku(int sudoku[][], int num) {
@@ -95,9 +94,56 @@ public class Sudoku {
         System.out.println("Num: " + num);
 
         sudoku[posF][posC] = num;
-        
+
         return sudoku;
 
+    }
+    //==========================================================================
+
+    // Comprueba si los numeros son correctos o no =============================
+    public static boolean comprobarSudoku(int sudoku[][]) {
+        int[] sumaFil = new int[4]; //Vector para guardar las sumas de fila
+        int[] sumaCol = new int[4]; //Vector para guardar las sumas de columna
+        int filIgual = 0, colIgual = 0; // Contador de filas y columnas correctas
+
+        //Sumar los numeros de fila
+        for (int i = 0; i < sudoku.length; i++) {
+            sumaFil[i] = 0;
+            for (int j = 0; j < sudoku[i].length; j++) {
+                sumaFil[i] += sudoku[i][j];
+            }
+        }
+
+        //Sumar los numeros de columna
+        for (int j = 0; j < sudoku.length; j++) {
+            sumaCol[j] = 0;
+            for (int i = 0; i < sudoku[j].length; i++) {
+                sumaCol[j] += sudoku[i][j];
+            }
+        }
+
+        //Comprueba si las sumas de filas son iguales a 10.
+        for (int i = 0; i < sudoku.length; i++) {
+            if (sumaFil[i] == 10) { //Comprueba que total de sumas son 10. 
+                filIgual++;
+            }
+        }
+
+        //Comprueba si las sumas de columnas son iguales a 10.
+        for (int i = 0; i < sudoku.length; i++) {
+            if (sumaCol[i] == 10) {  //Comprueba que total de sumas son 10.
+                colIgual++;
+            }
+        }
+
+        //Ultima comprobación las sumas del filas y columnas
+        if (filIgual == 4 && colIgual == 4) {
+            resultadoComprobar = true;
+        } else {
+            resultadoComprobar = false;
+        }
+
+        return resultadoComprobar;
     }
     //==========================================================================
 
@@ -118,11 +164,15 @@ public class Sudoku {
                     mostrarSudoku4x4();
                     break;
                 case 2: //Añadir o modificar
-                    System.out.println("NUMERO ANTES: " + num);
                     modificarSudoku(sudoku, num);
-                    System.out.println("NUMERO DESPUES: " + num);
                     break;
                 case 3: //Terminar
+                    if (comprobarSudoku(sudoku)) {
+                        System.out.println("¡Has ganado! ¡Felicidades!");
+                    } else {
+                        System.out.println("Oh, has perdido.");
+                    }
+                    System.out.println("Gracias por jugar.");
                     salir = true;
                     break;
             }
